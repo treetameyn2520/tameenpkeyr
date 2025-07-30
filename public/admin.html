@@ -354,7 +354,7 @@
         const dataContainer = document.getElementById('data-container');
         const noDataMessage = document.getElementById('initial-no-data');
 
-        const socket = io('http://localhost:3000');
+        const socket = io(); // هذا سيتصل بنفس النطاق الذي تخدم منه الصفحة
 
         socket.on('connect', () => {
             console.log('Connected to WebSocket server');
