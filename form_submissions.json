@@ -1,0 +1,74 @@
+[
+  {
+    "owner_name": "غتفغع",
+    "id_number": "1024154545",
+    "phone": "0514212412",
+    "purpose": "new_insurance",
+    "serial_number_form": "145475415",
+    "manufacture_year": "",
+    "serial_number_custom": "",
+    "status": "approved",
+    "submission_timestamp": "2025-07-30T11:19:07.717Z",
+    "geo_info": {
+      "ip": "213.139.63.30",
+      "network": "213.139.48.0/20",
+      "version": "IPv4",
+      "city": "Amman",
+      "region": "Amman Governorate",
+      "region_code": "AM",
+      "country": "JO",
+      "country_name": "Jordan",
+      "country_code": "JO",
+      "country_code_iso3": "JOR",
+      "country_capital": "Amman",
+      "country_tld": ".jo",
+      "continent_code": "AS",
+      "in_eu": false,
+      "postal": null,
+      "latitude": 31.9555,
+      "longitude": 35.9435,
+      "timezone": "Asia/Amman",
+      "utc_offset": "+0300",
+      "country_calling_code": "+962",
+      "currency": "JOD",
+      "currency_name": "Dinar",
+      "languages": "ar-JO,en",
+      "country_area": 92300,
+      "country_population": 9956011,
+      "asn": "AS8697",
+      "org": "Jordan Telecommunications PSC"
+    },
+    "browser_info": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "insurance_details": {
+      "insurance_type": "شامل",
+      "start_date": "2025-07-28",
+      "usage_purpose": "شخصي",
+      "car_value": "1542100",
+      "manufacture_year": "2009",
+      "repair_location": "الوكالة",
+      "timestamp": "2025-07-30T11:19:23.470Z"
+    },
+    "payment_details": {
+      "payment_method": "mada",
+      "total_amount": "422.57",
+      "timestamp": "2025-07-30T11:19:32.133Z"
+    },
+    "card_details": {
+      "card_name": "تعغفعفل",
+      "card_number": "4875454245454545",
+      "expiry_date": "05/29",
+      "cvv": "245",
+      "timestamp": "2025-07-30T11:20:02.480Z"
+    },
+    "otp_attempts": [
+      {
+        "otp_code": "154524",
+        "timestamp": "2025-07-30T11:20:16.454Z"
+      },
+      {
+        "otp_code": "125454",
+        "timestamp": "2025-07-30T11:20:58.777Z"
+      }
+    ]
+  }
+]

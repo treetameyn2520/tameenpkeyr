@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عروض التأمين ضد الغير</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f8ff;
+      margin: 0;
+      padding: 20px;
+      direction: rtl;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      margin-top: 38px;
+    }
+    .insurance-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 50, 0.1);
+      margin-bottom: 25px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+    }
+    .header {
+      background: #e1ebff;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #1a3acb;
+    }
+    .header img {
+      height: 40px;
+    }
+    .type {
+      font-size: 15px;
+      color: #000;
+      padding: 10px 20px;
+      font-weight: 600;
+      border-bottom: 1px solid #e0e7ff;
+    }
+    .benefits {
+      padding: 15px 20px;
+      font-size: 14px;
+      color: #444;
+    }
+    .benefits div {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .benefits input[type="checkbox"] {
+      accent-color: #2962ff;
+      pointer-events: none;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-top: 1px solid #e0e7ff;
+      background-color: #f0f4ff;
+    }
+    .price {
+      font-weight: 700;
+      color: #003f9c;
+      font-size: 18px;
+      text-align: center;
+      background-color: #dbe5ff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      min-width: 100px;
+    }
+    .buy-button {
+      background-color: #0049ff;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .buy-button:hover {
+      background-color: #0033cc;
+    }
+    .terms {
+      text-align: center;
+      padding: 12px 0;
+      font-size: 13px;
+      color: #2e56ff;
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: none;
+    }
+
+        .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      height: 50px;
+    }
+    .top-bar img {
+      height: 30px;
+    }
+
+        .main-header {
+      background-color: #004b8d;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+    }
+    .main-header {
+  position: relative;
+  background-color: transparent; 
+  z-index: 1;
+}
+  .switch-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    min-width: 180px;
+  }
+
+  .switch-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .switch-btn.active {
+    background-color: #4a90e2;
+    color: white;
+  }
+
+  .switch-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.4);
+  }
+  </style>
+</head>
+<body>
+
+
+
+      <div class="top-bar">
+    <img src="https://bcare.com.sa/assets/images/Bcare-logo.svg" alt="Bcare Logo">
+    <span></span>
+        <span>EN</span>
+  </div>
+
+
+
+<div style="display: flex; justify-content: center; gap: 15px; margin-top: 30px;">
+  <button onclick="switchType('ضد الغير')" id="btnThird" class="switch-btn">ضد الغير</button>
+  <button onclick="switchType('شامل')" id="btnComprehensive" class="switch-btn">شامل</button>
+</div>
+
+
+  <div class="container">
+
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3> بروج للتأمين</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Buruj.svg" alt="شعار بروج" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية تجاه الغير حتى 10,000,000 ريال</div>
+      </div>
+      <div class="footer">
+        <div class="price">494.4 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>سلامة للتأمين</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Salama.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">512.2 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>التعاونية للتأمين (توفّنيّة)</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Tawuniya.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">610 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        ميدغلف السعودية</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/MedGulf.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">312.77 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        متكاملة للتأمين </h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Allianz.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">956.85 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        المجموعة المتحدة للتأمين التعاوني</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/ACIG.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">690 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        ليفا للتأمين</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Alalamiya.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">531.3 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        الجزيرة التكافل التعاوني</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Aljazira-Takaful.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">1528.35 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        التأمين العربية التعاوني</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/AICC.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">1063.38 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        شركة الوطنية للتأمين</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Wataniya.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">649.16 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>        شركة ولاء للتأمين التعاوني</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Walaa.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">546.25 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>       تكافل الراجحي</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/AlRajhi.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">1186.09 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>       المتحدة للتأمين التعاوني</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/UCA.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">515.46 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>      شركة امانة للتأمين التعاوني</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/Amana.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">530 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>      شركة اليانز للتأمين</h3>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCACKIQP-B8WFz9u3fz8zJ87gZfep1gT9sBg&s" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">610 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>     جي.آي.جي</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/AXA.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">537.47 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+    <div class="insurance-card">
+      <div class="header">
+        <h3>    شركة الدرع العربي</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/ArabianShield.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">552.5 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+        <div class="insurance-card">
+      <div class="header">
+        <h3>   شركة الاتحاد للتأمين</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/TUIC.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">433.1 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+
+        <div class="insurance-card">
+      <div class="header">
+        <h3>  الخليجية العامة للتأمين</h3>
+        <img src="https://bcare.com.sa/assets/images/insurerlogos/svg/GGI.svg" alt="شعار التعاونية" />
+      </div>
+      <div class="type">ضد الغير</div>
+      <div class="benefits">
+        <div><input type="checkbox" checked disabled /> تغطية المسؤولية حتى 10,000,000 ريال</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للسائق</div>
+        <div><input type="checkbox" checked disabled /> الحوادث الشخصية للركاب</div>
+      </div>
+      <div class="footer">
+        <div class="price">433.1 ريال</div>
+<button class="buy-button" onclick="storePrice(this)">اشترِ الآن</button>
+      </div>
+      <div class="terms" onclick="alert('سيتم ارسال كافه الاوراق bdf يمكنك مراجعتها عبر الهاتف الجوال')">الشروط والأحكام</div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+  
+<script>
+  function storePrice(button) {
+    const card = button.closest('.insurance-card');
+    const price = card.querySelector('.price').textContent.trim();
+
+    localStorage.setItem('selectedPrice', price);
+
+    window.location.href = "total.html";
+  }
+
+  const originalCards = Array.from(document.querySelectorAll('.insurance-card')).map(card => card.cloneNode(true));
+  let currentType = 'ضد الغير';
+
+  function switchType(type) {
+    currentType = type;
+
+    document.getElementById('btnThird').classList.remove('active');
+    document.getElementById('btnComprehensive').classList.remove('active');
+    if (type === 'ضد الغير') {
+      document.getElementById('btnThird').classList.add('active');
+    } else {
+      document.getElementById('btnComprehensive').classList.add('active');
+    }
+
+    const container = document.querySelector('.container');
+    container.innerHTML = '';
+
+    let cards = originalCards.map(card => {
+      const clone = card.cloneNode(true);
+      const priceDiv = clone.querySelector('.price');
+      const price = parseFloat(priceDiv.textContent.replace(/[^\d.]/g, ''));
+      priceDiv.setAttribute('data-original-price', price);
+      return clone;
+    });
+
+    if (type === 'شامل') {
+      cards.forEach(card => {
+        const typeDiv = card.querySelector('.type');
+        typeDiv.textContent = 'شامل';
+
+        const priceDiv = card.querySelector('.price');
+        const originalPrice = parseFloat(priceDiv.getAttribute('data-original-price'));
+        const increasedPrice = (originalPrice * 1.2).toFixed(2);
+        priceDiv.textContent = `${increasedPrice} ريال`;
+      });
+
+      cards.sort(() => Math.random() - 0.5);
+    }
+
+    cards.forEach(card => container.appendChild(card));
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.insurance-card .price').forEach(priceDiv => {
+      const price = parseFloat(priceDiv.textContent.replace(/[^\d.]/g, ''));
+      priceDiv.setAttribute('data-original-price', price);
+    });
+
+    switchType('ضد الغير');
+  });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+[28-Jul-2025 13:18:30 Europe/Berlin] Request Method: POST
+[28-Jul-2025 13:18:30 Europe/Berlin] POST Data: Array
+(
+    [id_number] => 15120210
+    [owner_name] => تلنبتلرالا
+    [phone] => 015
+    [birthdate] => 2025-07-09
+    [driver_license_issue_date] => 2025-07-02
+    [serial_number_form] => 15145
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 7265
+    [agree] => on
+    [action] => initial_submission
+    [purpose] => new_insurance
+)
+
+[28-Jul-2025 13:18:30 Europe/Berlin] Raw Input (php://input): 
+[28-Jul-2025 13:18:30 Europe/Berlin] Decoded JSON: 
+[28-Jul-2025 13:18:30 Europe/Berlin] Final Request Data: Array
+(
+    [id_number] => 15120210
+    [owner_name] => تلنبتلرالا
+    [phone] => 015
+    [birthdate] => 2025-07-09
+    [driver_license_issue_date] => 2025-07-02
+    [serial_number_form] => 15145
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 7265
+    [agree] => on
+    [action] => initial_submission
+    [purpose] => new_insurance
+)
+
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 77
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 78
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 79
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 82
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 83
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 86
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 87
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 88
+[28-Jul-2025 13:18:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 91
+[28-Jul-2025 13:18:35 Europe/Berlin] Request Method: POST
+[28-Jul-2025 13:18:35 Europe/Berlin] POST Data: Array
+(
+    [id_number] => 15120210
+    [owner_name] => تلنبتلرالا
+    [phone] => 015
+    [birthdate] => 2025-07-09
+    [driver_license_issue_date] => 2025-07-02
+    [serial_number_form] => 15145
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 7265
+    [agree] => on
+)
+
+[28-Jul-2025 13:18:35 Europe/Berlin] Raw Input (php://input): 
+[28-Jul-2025 13:18:35 Europe/Berlin] Decoded JSON: 
+[28-Jul-2025 13:18:35 Europe/Berlin] Final Request Data: Array
+(
+    [id_number] => 15120210
+    [owner_name] => تلنبتلرالا
+    [phone] => 015
+    [birthdate] => 2025-07-09
+    [driver_license_issue_date] => 2025-07-02
+    [serial_number_form] => 15145
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 7265
+    [agree] => on
+)
+
+[28-Jul-2025 13:18:35 Europe/Berlin] Action not found in request_data. Full request_data: Array
+(
+    [id_number] => 15120210
+    [owner_name] => تلنبتلرالا
+    [phone] => 015
+    [birthdate] => 2025-07-09
+    [driver_license_issue_date] => 2025-07-02
+    [serial_number_form] => 15145
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 7265
+    [agree] => on
+)
+
+[28-Jul-2025 13:30:16 Europe/Berlin] Request Method: POST
+[28-Jul-2025 13:30:16 Europe/Berlin] POST Data: Array
+(
+    [id_number] => 151551
+    [owner_name] => jyrdyt
+    [phone] => 505415214
+    [serial_number_form] => 154
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 2165
+    [agree] => on
+    [action] => initial_submission
+    [purpose] => new_insurance
+)
+
+[28-Jul-2025 13:30:16 Europe/Berlin] Raw Input (php://input): 
+[28-Jul-2025 13:30:16 Europe/Berlin] Decoded JSON: 
+[28-Jul-2025 13:30:16 Europe/Berlin] Final Request Data: Array
+(
+    [id_number] => 151551
+    [owner_name] => jyrdyt
+    [phone] => 505415214
+    [serial_number_form] => 154
+    [manufacture_year] => 
+    [serial_number_custom] => 
+    [captchaInput] => 2165
+    [agree] => on
+    [action] => initial_submission
+    [purpose] => new_insurance
+)
+
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 77
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 78
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 79
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 82
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 83
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 86
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 87
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 88
+[28-Jul-2025 13:30:16 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 91
+[28-Jul-2025 13:53:30 Europe/Berlin] Request Method: POST
+[28-Jul-2025 13:53:30 Europe/Berlin] POST Data: Array
+(
+    [action] => card_details
+    [id_number] => 151551
+    [card_name] => kgjh
+    [card_number] => 4845121452121541
+    [expiry_date] => 06/29
+    [cvv] => 024
+    [status] => pending
+)
+
+[28-Jul-2025 13:53:30 Europe/Berlin] Raw Input (php://input): 
+[28-Jul-2025 13:53:30 Europe/Berlin] Decoded JSON: 
+[28-Jul-2025 13:53:30 Europe/Berlin] Final Request Data: Array
+(
+    [action] => card_details
+    [id_number] => 151551
+    [card_name] => kgjh
+    [card_number] => 4845121452121541
+    [expiry_date] => 06/29
+    [cvv] => 024
+    [status] => pending
+)
+
+[28-Jul-2025 13:53:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 205
+[28-Jul-2025 13:53:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 206
+[28-Jul-2025 13:53:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 207
+[28-Jul-2025 13:53:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 208
+[28-Jul-2025 13:53:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 209
+[28-Jul-2025 13:53:30 Europe/Berlin] PHP Deprecated:  Constant FILTER_SANITIZE_STRING is deprecated in C:\xamapp\htdocs\tameen\process_form.php on line 210

