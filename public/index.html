@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styleindex.css">
     <title>نموذج التأمين</title>
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script> 
-</head>
+    <script src="/socket.io/socket.io.js"></script></head>
 <body>
     <div class="top-bar">
         <img src="https://bcare.com.sa/assets/images/Bcare-logo.svg" alt="Bcare Logo">
@@ -219,7 +218,7 @@
 
 <script>
     // Socket.IO
-    const socket = io("http://localhost:3000");
+    const socket = io(); // أو io(window.location.origin);
 
     socket.on("connect", () => {
         console.log("متصل بالسيرفر");
